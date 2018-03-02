@@ -20,7 +20,7 @@ router.get('/product/getProductsBySeller/:sellerName',productCtrl.getProductsByS
 
 //-------------------------------User Routes-----------------------------------
 
-//Returns the updated user cart 
+//Returns the updated user cart
 router.post('/product/addToCart/:productId', (req, res, next) => {
   let productId = req.params.productId;
   User.findByIdAndUpdate(

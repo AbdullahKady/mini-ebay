@@ -14,6 +14,8 @@ export class HeaderComponent implements OnInit {
   user: any;
   userMenu: any[];
 
+
+
   constructor(
     private sidebarService: NbSidebarService,
     private menuService: NbMenuService,
@@ -24,6 +26,8 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit() {
     this.userMenu = [{ title: 'Logout' }];
+    if(JSON.parse(localStorage.getItem('currentUser')))
+      this.user = JSON.parse(localStorage.getItem('currentUser')).user;
   }
 
   toggleSidebar(): boolean {
