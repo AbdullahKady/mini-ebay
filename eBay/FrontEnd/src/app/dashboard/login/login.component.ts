@@ -13,11 +13,10 @@ import { AuthService } from '../../services/auth.service';
 export class LoginComponent implements OnInit {
 
   constructor(private fb: FormBuilder,
-                private authService: AuthService,
-                private router: Router,
-                private toaster: ToasterService
-  )
-                { } 
+    private authService: AuthService,
+    private router: Router,
+    private toaster: ToasterService
+  ) { }
 
   username = new FormControl('', [Validators.required]);
   password = new FormControl('', [Validators.required]);

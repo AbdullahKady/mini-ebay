@@ -10,7 +10,7 @@ import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
 import { AuthGuardService } from '../services/auth-guard.service';
 import { CartComponent } from './cart/cart.component';
-
+import { AdminComponent } from './admin/admin.component';
 
 const routes: Routes = [
   {
@@ -19,11 +19,11 @@ const routes: Routes = [
     children: [
       {
         path: 'items',
-        // TODO
-        canActivate: [ AuthGuardService],
+        canActivate: [AuthGuardService],
         component: ItemsComponent
       },
-      { path: 'store',
+      {
+        path: 'store',
         component: StoreComponent
       },
       {
@@ -44,8 +44,13 @@ const routes: Routes = [
       },
       {
         path: 'cart',
-        canActivate: [ AuthGuardService],
+        canActivate: [AuthGuardService],
         component: CartComponent
+      },
+      {
+        path: 'admin',
+        canActivate: [AuthGuardService],
+        component: AdminComponent
       },
       {
         path: '',
@@ -61,4 +66,4 @@ const routes: Routes = [
   exports: [RouterModule],
   providers: []
 })
-export class DashboardRoutingModule {}
+export class DashboardRoutingModule { }

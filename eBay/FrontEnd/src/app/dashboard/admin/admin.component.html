@@ -1,0 +1,52 @@
+<h1 class="text-center">All products sold on the website:</h1>
+<br>
+
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">Price</th>
+      <th scope="col">Created at</th>
+      <th scope="col">Updated at</th>
+      <th scope="col">Seller</th>
+      <th scope="col" *ngIf="currentUser.role === 'admin'">Delete</th>
+      <th scope="col">Edit</th>
+    </tr>
+  </thead>
+  <tbody>
+
+    <tr *ngFor="let product of itemsList;let i = index;">
+
+      <th scope="row">
+        <input class="form-control" [disabled]="!itemsState[i]" #updatedName [value]="product.name">
+      </th>
+      <td>
+        <input class="form-control" type="price" [disabled]="!itemsState[i]" #updatedPrice [value]="product.price">
+      </td>
+      <td>
+        <b>{{product.createdAt | date: 'shortDate'}}</b>
+      </td>
+      <td>
+        <b>{{(product.updatedAt !== undefined)? ( product.updatedAt | date: 'short' ) : "Product was never updated"}}</b>
+      </td>
+      <td>
+        <b>{{product.sellerName}}</b>
+      </td>
+      <td>
+        <button style="cursor:pointer;" class="btn btn-danger" (click)="removeProduct(product._id)" *ngIf="currentUser.role === 'admin' ">
+          <i class="fas fa-trash-alt"></i>
+        </button>
+      </td>
+      <td>
+        <button style="cursor:pointer;" *ngIf="!itemsState[i]" class="btn btn-primary" (click)="editProduct(i)">
+          Edit
+          <i class="fas fa-edit"></i>
+        </button>
+        <button style="cursor:pointer;" *ngIf="itemsState[i]" type="submit" class="btn btn-success" (click)="updateProduct(product._id,i,updatedName.value,updatedPrice.value)">
+          Submit
+          <i class="fas fa-arrow-circle-right"></i>
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>

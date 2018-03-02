@@ -22,12 +22,17 @@ export class HeaderComponent implements OnInit {
     private authService: AuthService,
     private router: Router,
     private toaster: ToasterService
-  ) {}
+  ) { }
 
   ngOnInit() {
+
     this.userMenu = [{ title: 'Logout' }];
-    if(JSON.parse(localStorage.getItem('currentUser')))
+    if (JSON.parse(localStorage.getItem('currentUser'))) {
       this.user = JSON.parse(localStorage.getItem('currentUser')).user;
+      if (this.user.role === "manager" || this.user.role === "admin")
+        this.userMenu.unshift({ title: 'Admin System' });
+
+    }
   }
 
   toggleSidebar(): boolean {
@@ -46,17 +51,22 @@ export class HeaderComponent implements OnInit {
   login() {
     this.router.navigate(['dashboard/login']);
   }
+  admin() {
+    this.router.navigate(['dashboard/admin']);
+  }
 
   onMenuClick(event) {
-    if (event.title === 'Logout') {
-        this.authService.logout();
-        this.toaster.pop({
-          type: 'success',
-          title: "Success!",
-          body: "You've been logged out",
-          timeout: 3000
-        });
-        this.router.navigate(['dashboard/login']);
+    if (event.title === 'Admin System') {
+      this.router.navigate(['dashboard/admin']);
+    } else if (event.title === 'Logout') {
+      this.authService.logout();
+      this.toaster.pop({
+        type: 'success',
+        title: "Success!",
+        body: "You've been logged out",
+        timeout: 3000
+      });
+      this.router.navigate(['dashboard/login']);
     }
   }
 }

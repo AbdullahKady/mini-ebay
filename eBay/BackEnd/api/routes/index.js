@@ -15,10 +15,54 @@ router.get(
 router.post('/product/createProduct', productCtrl.createProduct);
 router.patch('/product/updateProduct/:productId', productCtrl.updateProduct);
 router.delete('/product/deleteProduct/:productId', productCtrl.deleteProduct);
-router.get('/product/getProductsBySeller/:sellerName',productCtrl.getProductsBySeller);
+router.get('/product/getProductsBySeller/:sellerName', productCtrl.getProductsBySeller);
 
 
 //-------------------------------User Routes-----------------------------------
+
+//Mainly for testing, assigning ppl to managers/admins
+
+router.post('/users/makeAdmin/:userID', (req, res, next) => {
+
+  User.findByIdAndUpdate(
+    req.params.userID,
+    {
+      $set: { role: 'admin' }
+    }
+  ).exec(function (err, user) {
+    if (err) {
+      return next(err);
+    }
+    res.status(200).json({
+      err: null,
+      msg: 'User is now an Admin',
+      data: user
+    });
+  });
+
+});
+
+router.post('/users/makeManager/:userID', (req, res, next) => {
+
+  User.findByIdAndUpdate(
+    req.params.userID,
+    {
+      $set: { role: 'manager' }
+    }
+  ).exec(function (err, user) {
+    if (err) {
+      return next(err);
+    }
+    res.status(200).json({
+      err: null,
+      msg: 'User is now a manager',
+      data: user
+    });
+  });
+
+});
+
+
 
 //Returns the updated user cart
 router.post('/product/addToCart/:productId', (req, res, next) => {
@@ -81,7 +125,7 @@ router.delete('/product/deleteCartItem/:userID/:productID', (req, res, next) => 
   });
 });
 
-router.get('/user/getUser/:id', (req,res,next) =>{
+router.get('/user/getUser/:id', (req, res, next) => {
 
 
   User.findById(req.params.id).exec(function (err, user) {
@@ -181,7 +225,8 @@ router.post('/login', (req, res, next) => {
       // This object is just used to remove the password from the retuned fields
       let returnUser = {
         username: user.username,
-        id: user._id
+        id: user._id,
+        role: user.role
       }
 
       //Send the response back
