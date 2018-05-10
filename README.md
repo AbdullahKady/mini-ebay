@@ -1,1 +1,3 @@
-# Originally forked from https://github.com/MoghazyCoder/SE-Project
+# Originally forked from:
+
+[Original repo](https://github.com/MoghazyCoder/SE-Project)
